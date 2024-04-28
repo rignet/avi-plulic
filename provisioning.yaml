@@ -21,6 +21,14 @@
       ansible.builtin.hostname:
         name: "{{ new_hostname }}"
 
+    - name: Install ntpdate package
+      apt:
+        name: ntpdate
+        state: present
+
+    - name: Synchronize time with pool.ntp.org
+      shell: ntpdate -v pool.ntp.org
+
     - name: Install Linux packages
       apt:
         name: "{{ item }}"
