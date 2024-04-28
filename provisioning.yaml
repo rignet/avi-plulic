@@ -1,0 +1,79 @@
+---
+- name: Ubuntu Workstation Configuration with Docker and KVM
+  hosts: localhost
+  connection: local
+  become: true
+  vars:
+    hostname_prefix: "propetro-intelie-"
+    hostname_suffix: ""
+
+  tasks:
+    - name: Request server identification number
+      ansible.builtin.pause:
+        prompt: "Enter the server identification number (e.g.: 01, 02, 10, 33, 126):"
+      register: hostname_suffix_answer
+
+    - name: Generate new hostname
+      set_fact:
+        new_hostname: "{{ hostname_prefix }}{{ hostname_suffix_answer.user_input }}"
+
+    - name: Change hostname to {{ new_hostname }}
+      ansible.builtin.hostname:
+        name: "{{ new_hostname }}"
+
+    - name: Install Linux packages
+      apt:
+        name: "{{ item }}"
+        install_recommends: yes
+        state: present
+      loop:
+        - vim
+        - htop
+        - wget
+        - ncdu
+        - tree
+        - python3-pip
+        - mlocate
+        - mtr
+        - nmap
+        - neofetch
+        - net-tools
+        - gparted
+        - openvpn
+        - tmux
+        - iptables-persistent
+
+    - name: Update package list cache
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install QEMU and KVM packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - qemu
+        - qemu-kvm
+        - bridge-utils
+        - libvirt-daemon-system
+        - libvirt-clients
+        - virt-manager
+
+    - name: Enable and start QEMU services
+      service:
+        name: "{{ item }}"
+        enabled: yes
+        state: started
+      loop:
+        - qemu-kvm
+        - libvirtd
+
+    - name: Find and remove files .yaml
+      command:
+        cmd: "find /etc/netplan -type f -name '*.yaml' -exec rm {} +"
+
+    - name: Add the new netplan file
+      copy:
+        src: protectli-pp-network.yaml
+        dest: /etc/netplan/
+
