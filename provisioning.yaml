@@ -8,9 +8,9 @@
     hostname_suffix: ""
 
   tasks:
-    - name: Request server identification number
+    - name: Request server identification number *ATTENTION*
       ansible.builtin.pause:
-        prompt: "Enter the server identification number (e.g.: 01, 02, 10, 33, 126):"
+        prompt: "Enter the server identification number: It must start with the number 64 and cannot be repeated. (e.g.: 64, 65, 107):"
       register: hostname_suffix_answer
 
     - name: Generate new hostname
