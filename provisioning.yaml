@@ -1,5 +1,5 @@
 ---
-- name: Ubuntu PP Server Configuration
+- name: Ubuntu Workstation Configuration
   hosts: localhost
   connection: local
   become: true
@@ -63,7 +63,7 @@
           port: 8081
           jump: ACCEPT
 
-      - name: Add DNAT rule to redirect port 8081 to 192.168.122.100:8081
+    - name: Add DNAT rule to redirect port 8081 to 192.168.122.100:8081
         iptables:
           table: nat
           chain: PREROUTING
