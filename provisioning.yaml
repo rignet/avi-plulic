@@ -56,18 +56,18 @@
         - libvirtd
 
     - name: Add FORWARD rule to allow traffic on port 8081
-        iptables:
-          chain: FORWARD
-          insert: I
-          protocol: tcp
-          port: 8081
-          jump: ACCEPT
+      iptables:
+        chain: FORWARD
+        insert: I
+        protocol: tcp
+        port: 8081
+        jump: ACCEPT
 
     - name: Add DNAT rule to redirect port 8081 to 192.168.122.100:8081
-        iptables:
-          table: nat
-          chain: PREROUTING
-          protocol: tcp
-          port: 8081
-          jump: DNAT
-          to_destination: 192.168.122.100:8081
+      iptables:
+        table: nat
+        chain: PREROUTING
+        protocol: tcp
+        port: 8081
+        jump: DNAT
+        to_destination: 192.168.122.100:8081
