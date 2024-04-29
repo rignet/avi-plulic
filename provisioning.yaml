@@ -55,12 +55,3 @@
         - qemu-kvm
         - libvirtd
 
-    - name: Find and remove files .yaml
-      command:
-        cmd: "find /etc/netplan -type f -name '*.yaml' -exec rm {} +"
-
-    - name: Add the new netplan file
-      copy:
-        src: protectli-pp-network.yaml
-        dest: /etc/netplan/
-
