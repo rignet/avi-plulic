@@ -9,14 +9,17 @@ ___
 ```bash
 sudo apt update && sudo apt install ansible git -y
 ```
-1. Clone this repository.
+2. Clone this repository.
 ```bash
 git clone https://github.com/rignet/avi-plulic.git
 ```
-1. Apply the configuration.
+3. Change directory
+```
+cd avi-public
+```
+4. Apply the configuration.
 ```
 ansible-playbook provisioning.yaml --ask-become-pass
 ```
 >Enter your password when asked to grant root permissions for some actions.
-
-1. During installation, you will be asked for the server number to complete the hostname starting with `propetro-intelie-` and then continue adding the sequential numbers.
+5. During installation, you will be asked for the server number to complete the hostname starting with `propetro-intelie-` and then continue adding the sequential numbers.
