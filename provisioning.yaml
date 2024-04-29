@@ -27,29 +27,7 @@
         state: present
 
     - name: Synchronize time with pool.ntp.org
-      shell: ntpdate -v pool.ntp.org
-
-    - name: Install Linux packages
-      apt:
-        name: "{{ item }}"
-        install_recommends: yes
-        state: present
-      loop:
-        - vim
-        - htop
-        - wget
-        - ncdu
-        - tree
-        - python3-pip
-        - mlocate
-        - mtr
-        - nmap
-        - neofetch
-        - net-tools
-        - gparted
-        - openvpn
-        - tmux
-        - iptables-persistent
+      shell: ntpdate -v pool.ntp.org    
 
     - name: Update package list cache
       ansible.builtin.apt:
@@ -60,6 +38,7 @@
         name: "{{ item }}"
         state: present
       loop:
+        - iptables-persistent
         - qemu
         - qemu-kvm
         - bridge-utils
